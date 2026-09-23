@@ -144,13 +144,28 @@ def write(x):
     return "(" + " ".join(write(e) for e in x) + ")"
 
 
+# 核にない記号を見かけたら、本体の場所を教える
+LATER = {"\\": "lambda", "*": "label", "!": "eval", "$": "apply"}
+
+
+def hint(name):
+    """\\ * ! $ や :def は本体 polisp.py の機能。そう書いてあれば一言添える。"""
+    if name[:1] in LATER:
+        return "。%s（%s）は本体の polisp.py にあります" % (name[:1], LATER[name[:1]])
+    if name.startswith(":"):
+        return "。本体の polisp.py にあります"
+    return ""
+
+
 # ---------------------------------------------------------------------- 評価器
 def seval(x):
     if is_symbol(x):
+        if x.startswith(":"):
+            raise LispError("%s は、ここにはありません%s" % (x, hint(x)))
         if x == T:                        # t と () だけは自分自身に評価される
             return T
         raise LispError(
-            "%s には値がありません。データとして使うなら '%s と書きます" % (x, x)
+            "%s には値がありません。データとして使うなら '%s と書きます%s" % (x, x, hint(x))
         )
     if x == NIL:
         return NIL
@@ -160,7 +175,8 @@ def seval(x):
 
     if not is_symbol(op):
         raise LispError(
-            "%s は関数ではありません。先頭に置けるのは7つの記号だけです" % write(op)
+            "%s は関数ではありません。先頭に置けるのは7つの記号だけです%s"
+            % (write(op), hint(op[0] if is_list(op) and op and is_symbol(op[0]) else ""))
         )
 
     # --- ' と ? は引数を評価しない（特殊形式）
@@ -218,7 +234,7 @@ def seval(x):
             return (vals[0],) + vals[1]
 
     raise LispError(
-        "%s という公理はありません。使えるのは @ = < > + ? ' の7つです" % op
+        "%s という公理はありません。使えるのは @ = < > + ? ' の7つです%s" % (op, hint(op))
     )
 
 

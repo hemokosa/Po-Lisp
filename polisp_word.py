@@ -119,13 +119,31 @@ def write(x):
     return "(" + " ".join(write(e) for e in x) + ")"
 
 
+# 第一段にない語を見かけたら、あとの段の場所を教える
+LATER = {
+    "lambda": "polisp_word_lambda.py", "label": "polisp_word_lambda.py",
+    "eval": "polisp_word_eval.py", "apply": "polisp_word_eval.py",
+}
+
+
+def hint(name):
+    """lambda / label / eval / apply や :def は、あとの段の機能。"""
+    if name in LATER:
+        return "。%s は第二段以降（%s）にあります" % (name, LATER[name])
+    if name.startswith(":"):
+        return "。第二段以降にあります"
+    return ""
+
+
 # ---------------------------------------------------------------------- 評価器
 def seval(x):
     if is_symbol(x):
+        if x.startswith(":"):
+            raise LispError("%s は、ここにはありません%s" % (x, hint(x)))
         if x == T:                       # t と () だけは自分自身に評価される
             return T
         raise LispError(
-            "%s には値がありません。データとして使うなら '%s と書きます" % (x, x)
+            "%s には値がありません。データとして使うなら '%s と書きます%s" % (x, x, hint(x))
         )
     if x == NIL:
         return NIL
@@ -190,7 +208,8 @@ def seval(x):
             return (vals[0],) + vals[1]
 
     raise LispError(
-        "%s という公理はありません。使えるのは atom eq car cdr cons quote cond の7つです" % op
+        "%s という公理はありません。使えるのは atom eq car cdr cons quote cond の7つです%s"
+        % (op, hint(op))
     )
 
 
