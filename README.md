@@ -91,6 +91,8 @@ python3 polisp.py examples/polisp/hajimari.lisp
 
 - [`examples/polisp/hajimari.lisp`](examples/polisp/hajimari.lisp) ── **詩「はじまり」**。
   `()` から読み手（eval）まで、十二の段で積み上げる。走らせると、出力そのものがもう一篇になる
+- [`examples/polisp/hassei.lisp`](examples/polisp/hassei.lisp) ── **発生**。記号・名・式・評価・値・詩、
+  この言語じたいの言葉だけを語彙にした自己言及の詩。十二の段の問いと応えで、列が自分で閉じる
 - [`examples/polisp/quine.lisp`](examples/polisp/quine.lisp) ── **クワイン**。自分を書き出す式と、
   `(雪 が 降る)` を抱えたまま自分を書き出す式
 - [`examples/polisp/eval.lisp`](examples/polisp/eval.lisp) ── eval を Po-Lisp で書く。
@@ -99,7 +101,7 @@ python3 polisp.py examples/polisp/hajimari.lisp
   はたらきに渡すものとして。`🌸🍃` が切れないことや、`❄️` と `❄` が別の名前になることも確かめる
 - [`examples/polisp/kotoba.lisp`](examples/polisp/kotoba.lisp) ── 7文字だけの小片（`polisp_min.py` でも動く）
 
-はじめの四つは `polisp.py` で走らせる。`\ * ! $` と `:def` を使うので、7文字の核
+はじめの五つは `polisp.py` で走らせる。`\ * ! $` と `:def` を使うので、7文字の核
 （`polisp_min.py`）では動かない。核で動くのは `kotoba.lisp` だけ。
 
 ## 対話モード
