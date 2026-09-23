@@ -95,9 +95,11 @@ python3 polisp.py examples/polisp/hajimari.lisp
   `(雪 が 降る)` を抱えたまま自分を書き出す式
 - [`examples/polisp/eval.lisp`](examples/polisp/eval.lisp) ── eval を Po-Lisp で書く。
   最後に、詩をデータとして書き換えてから走らせる
+- [`examples/polisp/emoji.lisp`](examples/polisp/emoji.lisp) ── **絵文字**。名前として、列として、
+  はたらきに渡すものとして。`🌸🍃` が切れないことや、`❄️` と `❄` が別の名前になることも確かめる
 - [`examples/polisp/kotoba.lisp`](examples/polisp/kotoba.lisp) ── 7文字だけの小片（`polisp_min.py` でも動く）
 
-はじめの三つは `polisp.py` で走らせる。`\ * ! $` と `:def` を使うので、7文字の核
+はじめの四つは `polisp.py` で走らせる。`\ * ! $` と `:def` を使うので、7文字の核
 （`polisp_min.py`）では動かない。核で動くのは `kotoba.lisp` だけ。
 
 ## 対話モード
